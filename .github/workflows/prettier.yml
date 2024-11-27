@@ -1,0 +1,29 @@
+name: Prettier check
+
+on:
+  pull_request:
+
+jobs:
+  prettier-check:
+    name: Prettier check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🐿️ Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: 🌿 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ✨ Run Prettier check
+        run: pnpm run prettier:check
